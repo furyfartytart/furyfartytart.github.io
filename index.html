@@ -166,6 +166,8 @@
     <div class="card">
       <div class="glow"></div>
 
+      <a href="https://linktr.ee/skidmarkjoshua" target="_blank" rel="noopener noreferrer" style="font-size:clamp(72px,18vw,160px);padding:18px 28px;background:#111;color:#fff;border-radius:14px;text-decoration:none;font-weight:800;display:inline-block;letter-spacing:2px;transform:translateZ(20px);margin-bottom:8px;">M</a>
+
       <div class="photo" id="photo">
         <div class="photoInner" id="photoInner">
           <img src="image.jpg" alt="Portrait" id="mainImage" />
@@ -222,14 +224,14 @@
     setTimeout(()=> heart.remove(), (parseFloat(duration) + 0.6) * 1000);
   };
 
-  for(let i=0;i<6;i++){
+  for(let i=0;i<6;i++){  
     setTimeout(()=> createHeart(25 + Math.random()*50), 350 + i*220);
   }
 
   photo.addEventListener('click', (ev)=>{
     const r = photo.getBoundingClientRect();
     const xPct = ((ev.clientX - r.left) / r.width) * 100;
-    for(let i=0;i<6;i++){
+    for(let i=0;i<6;i++){  
       setTimeout(()=> createHeart(clamp(xPct + (Math.random()*18-9), 6, 94)), i * 80);
     }
     photo.style.transform = 'scale(.997)';
@@ -242,7 +244,6 @@
     createHeart(30 + Math.random()*40);
   }, 2400);
 
-  // I kept prefers-reduced-motion support enabled (clears auto hearts and disables animations)
   const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (mq.matches){
     clearInterval(autoTimer);
