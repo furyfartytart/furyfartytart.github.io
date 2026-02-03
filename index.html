@@ -1,24 +1,259 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Website</title>
-  <style>
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #000;
-    }
-    img {
-      max-width: 100%;
-      max-height: 100%;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Romantic — Image</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#0f0710;
+    --bg2:#3b0d2f;
+    --accent:#ff7aa2;
+    --soft:#ffd7e6;
+    --card-w:min(92vw,520px);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+  body{
+    display:grid;
+    place-items:center;
+    background: radial-gradient(1200px 600px at 10% 20%, rgba(255,122,162,0.07), transparent),
+                radial-gradient(900px 400px at 90% 80%, rgba(255,215,230,0.04), transparent),
+                linear-gradient(160deg,var(--bg1), var(--bg2));
+    color: #fff;
+    overflow:hidden;
+  }
+
+  .scene{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    padding:48px 20px;
+  }
+
+  .bokeh{
+    position:absolute;inset:0;z-index:0;overflow:hidden;
+  }
+  .bokeh span{
+    position:absolute;display:block;border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.2) 30%, transparent 60%);
+    filter: blur(24px);
+    opacity:.12;
+    animation: floatBokeh linear infinite;
+  }
+  .bokeh span:nth-child(1){width:240px;height:240px;left:6%;top:8%;animation-duration:18s}
+  .bokeh span:nth-child(2){width:160px;height:160px;left:75%;top:12%;background:rgba(255,122,162,.6);animation-duration:22s}
+  .bokeh span:nth-child(3){width:200px;height:200px;left:50%;top:68%;animation-duration:20s}
+  .bokeh span:nth-child(4){width:110px;height:110px;left:18%;top:62%;animation-duration:16s;opacity:.08}
+  @keyframes floatBokeh{
+    0%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-24px) scale(1.04)}
+    100%{transform:translateY(0) scale(1)}
+  }
+
+  .card{
+    position:relative;
+    width:var(--card-w);
+    z-index:10;
+    display:grid;
+    gap:18px;
+    place-items:center;
+    transform-style:preserve-3d;
+  }
+
+  .glow{
+    position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-30%);
+    width:calc(var(--card-w) * 1.25);
+    height:calc(var(--card-w) * 0.85);
+    background: radial-gradient(closest-side, rgba(255,122,162,0.12), transparent 40%);
+    filter: blur(40px);
+    z-index:8;
+    pointer-events:none;
+  }
+
+  .photo{
+    width:100%;
+    border-radius:20px;
+    overflow:hidden;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+    box-shadow: 0 18px 50px rgba(8,4,20,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+    transform-origin:center;
+    transition:transform .25s ease, box-shadow .25s ease;
+    position:relative;
+  }
+  .photoInner{
+    transform-style:preserve-3d;
+    transition:transform .08s linear;
+    will-change:transform;
+  }
+  .photo img{
+    display:block;width:100%;height:auto;max-height:78vh;object-fit:cover;
+    aspect-ratio:4/5;
+    transform:translateZ(20px);
+    display:block;
+  }
+
+  .photo::after{
+    content:"";
+    position:absolute;left:-120%;top:0;width:120%;height:100%;
+    transform:skewX(-20deg);
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    opacity:0.9;
+    pointer-events:none;
+    transition:transform .7s ease;
+    animation: sheen 6.5s linear infinite 1s;
+    mix-blend-mode:overlay;
+  }
+  @keyframes sheen{
+    0%{left:-120%}
+    50%{left:120%}
+    100%{left:-120%}
+  }
+
+  .caption{
+    text-align:center;z-index:12;
+    font-family:Playfair Display, serif;
+    letter-spacing:.6px;
+    color:var(--soft);
+    text-shadow: 0 6px 24px rgba(0,0,0,0.6);
+  }
+  .caption h1{margin:0;font-size:clamp(20px,4vw,34px);font-weight:700}
+  .caption p{margin:6px 0 0;font-size:14px;opacity:.9;color:rgba(255,235,245,.88)}
+
+  .heart{
+    position:fixed;
+    z-index:15;
+    pointer-events:none;
+    transform:translateY(0) scale(1);
+    animation: floatHeart linear forwards;
+    color:var(--accent);
+    text-shadow:0 6px 18px rgba(155, 20, 60, .28);
+    filter:drop-shadow(0 6px 16px rgba(0,0,0,.45));
+  }
+  @keyframes floatHeart{
+    0%{opacity:0; transform:translateY(0) scale(.6) rotate(0)}
+    10%{opacity:1}
+    80%{opacity:1}
+    100%{opacity:-30vh translateY(-160px) scale(1.2) rotate(18deg); opacity:0}
+  }
+
+  .hint{
+    position:fixed;right:18px;bottom:18px;z-index:20;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
+    padding:8px 12px;border-radius:12px;font-size:13px;color:rgba(255,255,255,.85);backdrop-filter: blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.45)
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bokeh span, .photo::after, .photoInner, .heart{animation:none !important; transition:none !important}
+  }
+
+  @media (max-width:420px){
+    .glow{width:120%;height:80%}
+    .card{gap:12px}
+    .photo{border-radius:14px}
+  }
+</style>
 </head>
 <body>
-  <img src="image.jpg" alt="My Image">
+  <div class="scene" id="scene">
+    <div class="bokeh">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="card">
+      <div class="glow"></div>
+
+      <div class="photo" id="photo">
+        <div class="photoInner" id="photoInner">
+          <img src="image.jpg" alt="Portrait" id="mainImage" />
+        </div>
+      </div>
+
+      <div class="caption">
+        <h1>Always my favorite view</h1>
+        <p>soft light • slow moments • endless warmth</p>
+      </div>
+    </div>
+
+    <div class="hint" id="hint">Move your mouse to tilt • Click to send hearts ❤️</div>
+  </div>
+
+<script>
+(function(){
+  const photo = document.getElementById('photo');
+  const inner = document.getElementById('photoInner');
+
+  requestAnimationFrame(()=> {
+    photo.style.transform = 'translateY(6px) scale(.995)';
+    setTimeout(()=> photo.style.transform = 'translateY(0) scale(1)', 40);
+  });
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  let lastX = 0, lastY = 0;
+  function onMove(e){
+    const rect = photo.getBoundingClientRect();
+    const x = ((e.clientX ?? e.touches?.[0]?.clientX) - rect.left) / rect.width - 0.5;
+    const y = ((e.clientY ?? e.touches?.[0]?.clientY) - rect.top) / rect.height - 0.5;
+    const rx = clamp(-y * 10, -14, 14);
+    const ry = clamp(x * 12, -18, 18);
+    lastX = lastX + (ry - lastX) * 0.18;
+    lastY = lastY + (rx - lastY) * 0.18;
+    inner.style.transform = `rotateX(${lastY}deg) rotateY(${lastX}deg) translateZ(6px)`;
+    document.querySelector('.glow').style.transform = `translate(-50%,-30%) translateX(${x * 18}px) translateY(${y * 12}px)`;
+  }
+  photo.addEventListener('mousemove', onMove);
+  photo.addEventListener('touchmove', onMove, {passive:true});
+  photo.addEventListener('mouseleave', ()=>inner.style.transform='rotateX(0) rotateY(0) translateZ(0)');
+  photo.addEventListener('touchend', ()=>inner.style.transform='rotateX(0) rotateY(0) translateZ(0)');
+
+  const createHeart = (xPercent = null) => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '❤';
+    const size = Math.floor(18 + Math.random() * 36);
+    heart.style.fontSize = size + 'px';
+    heart.style.left = (xPercent !== null ? xPercent : (10 + Math.random() * 80)) + '%';
+    const duration = (3 + Math.random() * 3).toFixed(2);
+    heart.style.animationDuration = duration + 's';
+    document.body.appendChild(heart);
+    setTimeout(()=> heart.remove(), (parseFloat(duration) + 0.6) * 1000);
+  };
+
+  for(let i=0;i<6;i++){
+    setTimeout(()=> createHeart(25 + Math.random()*50), 350 + i*220);
+  }
+
+  photo.addEventListener('click', (ev)=>{
+    const r = photo.getBoundingClientRect();
+    const xPct = ((ev.clientX - r.left) / r.width) * 100;
+    for(let i=0;i<6;i++){
+      setTimeout(()=> createHeart(clamp(xPct + (Math.random()*18-9), 6, 94)), i * 80);
+    }
+    photo.style.transform = 'scale(.997)';
+    setTimeout(()=> photo.style.transform = 'scale(1)', 140);
+  });
+
+  let autoTimer = setInterval(()=> {
+    if (document.hidden) return;
+    if (Math.random() < 0.6) return;
+    createHeart(30 + Math.random()*40);
+  }, 2400);
+
+  // I kept prefers-reduced-motion support enabled (clears auto hearts and disables animations)
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq.matches){
+    clearInterval(autoTimer);
+    photo.removeEventListener('mousemove', onMove);
+    photo.removeEventListener('touchmove', onMove);
+    document.querySelectorAll('.heart').forEach(h => h.remove());
+    document.querySelector('.bokeh')?.remove();
+    document.querySelector('.glow').style.display = 'none';
+  }
+
+})();
+</script>
 </body>
 </html>
